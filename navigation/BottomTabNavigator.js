@@ -4,6 +4,7 @@ import * as React from 'react';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
+import SafeArrestScreen from '../screens/SafeArrestScreen'
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -17,19 +18,27 @@ export default function BottomTabNavigator({ navigation, route }) {
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
-        name="Home"
+        name="SafeGroups"
         component={HomeScreen}
         options={{
-          title: 'Get Started',
+          title: 'SafeGroups',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
         }}
       />
       <BottomTab.Screen
-        name="Links"
+        name="Feed"
         component={LinksScreen}
         options={{
-          title: 'Resources',
+          title: 'Feed',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="SafeArrest"
+        component={SafeArrestScreen}
+        options={{
+          title: 'SafeArrest',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-albums" />,
         }}
       />
     </BottomTab.Navigator>
@@ -40,9 +49,11 @@ function getHeaderTitle(route) {
   const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
 
   switch (routeName) {
-    case 'Home':
-      return 'How to get started';
-    case 'Links':
-      return 'Links to learn more';
+    case 'SafeGroups':
+      return 'SafeGroups';
+    case 'Feed':
+      return 'Feed';
+    case 'SafeArrest':
+      return 'SafeArrest';
   }
 }

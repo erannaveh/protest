@@ -1,54 +1,85 @@
+import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { RectButton, ScrollView } from 'react-native-gesture-handler';
 
 import { MonoText } from '../components/StyledText';
 
-export default function HomeScreen() {
-  return (
-    <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <View style={styles.welcomeContainer}>
-          <Image
-            source={
-              __DEV__
-                ? require('../assets/images/robot-dev.png')
-                : require('../assets/images/robot-prod.png')
-            }
-            style={styles.welcomeImage}
-          />
-        </View>
-
-        <View style={styles.getStartedContainer}>
-          <DevelopmentModeNotice />
-
-          <Text style={styles.getStartedText}>Open up the code for this screen:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-            <MonoText>screens/HomeScreen.js</MonoText>
+export default class HomeScreen extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+          <View style={styles.welcomeContainer}>
+            <Image
+              source={
+                __DEV__
+                  ? require('../assets/images/robot-dev.png')
+                  : require('../assets/images/robot-prod.png')
+              }
+              style={styles.welcomeImage}
+            />
           </View>
+          
+          
+          <ScrollView style={styles2.container} contentContainerStyle={styles2.contentContainer}>
+            <OptionButton
+                icon="md-compass"
+                label="My Groups"
+                onPress={() => this.props.navigation.navigate('MyGroups')}
+            />
+            <OptionButton
+              icon="md-school"
+              label="Create A Group"
+              onPress={() => this.props.navigation.navigate('CreateGroup')}
+            />
 
-          <Text style={styles.getStartedText}>
-            Change any of the text, save the file, and your app will automatically reload.
-          </Text>
-        </View>
+            <OptionButton
+              icon="md-compass"
+              label="Join A Group"
+              onPress={() => this.props.navigation.navigate('JoinGroup')}
+            />
 
-        <View style={styles.helpContainer}>
-          <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-            <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+            <OptionButton
+              icon="ios-chatboxes"
+              label="Info On Safe Protesting"
+              onPress={() => WebBrowser.openBrowserAsync('https://www.dsa-la.org/guidelines_for_safe_protesting_covid')}
+              isLastOption
+            />
+          </ScrollView>
 
-      <View style={styles.tabBarInfoContainer}>
-        <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
+          <View style={styles.helpContainer}>
+            <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
+              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
 
-        <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-          <MonoText style={styles.codeHighlightText}>navigation/BottomTabNavigator.js</MonoText>
+        <View style={styles.tabBarInfoContainer}>
+          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
+
+          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
+            <MonoText style={styles.codeHighlightText}>navigation/BottomTabNavigator.js</MonoText>
+          </View>
         </View>
       </View>
-    </View>
+    );
+  }
+}
+
+function OptionButton({ icon, label, onPress, isLastOption }) {
+  return (
+    <RectButton style={[styles.option, isLastOption && styles.lastOption]} onPress={onPress}>
+      <View style={{ flexDirection: 'row' }}>
+        <View style={styles.optionIconContainer}>
+          <Ionicons name={icon} size={22} color="rgba(0,0,0,0.35)" />
+        </View>
+        <View style={styles.optionTextContainer}>
+          <Text style={styles.optionText}>{label}</Text>
+        </View>
+      </View>
+    </RectButton>
   );
 }
 
@@ -175,5 +206,34 @@ const styles = StyleSheet.create({
   helpLinkText: {
     fontSize: 14,
     color: '#2e78b7',
+  },
+});
+
+const styles2 = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fafafa',
+  },
+  contentContainer: {
+    paddingTop: 15,
+  },
+  optionIconContainer: {
+    marginRight: 12,
+  },
+  option: {
+    backgroundColor: '#fdfdfd',
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: 0,
+    borderColor: '#ededed',
+  },
+  lastOption: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  optionText: {
+    fontSize: 15,
+    alignSelf: 'flex-start',
+    marginTop: 1,
   },
 });

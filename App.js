@@ -5,7 +5,12 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 
 import useCachedResources from './hooks/useCachedResources';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
+import CreateGroupScreen from './screens/CreateGroupScreen';
+import ImNextToPoliceScreen from './screens/ImNextToPoliceScreen';
+import ImInCustodyScreen from './screens/ImInCustodyScreen';
+import JoinGroupScreen from './screens/JoinGroupScreen';
 import LinkingConfiguration from './navigation/LinkingConfiguration';
+import MyGroupsScreen from './screens/MyGroupsScreen';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +26,11 @@ export default function App(props) {
         <NavigationContainer linking={LinkingConfiguration}>
           <Stack.Navigator>
             <Stack.Screen name="Root" component={BottomTabNavigator} />
+            <Stack.Screen name="CreateGroup" component={CreateGroupScreen} />
+            <Stack.Screen name="JoinGroup" component={JoinGroupScreen} />
+            <Stack.Screen name="ImNextToPolice" component={ImNextToPoliceScreen} />
+            <Stack.Screen name="ImInCustody" component={ImInCustodyScreen} />
+            <Stack.Screen name="MyGroups" component={MyGroupsScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>
