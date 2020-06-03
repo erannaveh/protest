@@ -148,7 +148,6 @@ const styles = StyleSheet.create({
         alignSelf: "flex-end",
         alignItems: "center",
         backgroundColor: "transparent",
-        bottom: -670,
     },
     cameraIcon: {
         color: "white",
