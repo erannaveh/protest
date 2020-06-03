@@ -38,6 +38,14 @@ class ImNextToPoliceScreen extends Component {
         }
     };
 
+    flipCamera = () => {
+        if (this.state.cameraType === Camera.Constants.Type.back) {
+            this.setState({ cameraType: Camera.Constants.Type.front });
+        } else {
+            this.setState({ cameraType: Camera.Constants.Type.back });
+        }
+    };
+
     render() {
         const { hasPermission } = this.state;
 
@@ -73,27 +81,29 @@ class ImNextToPoliceScreen extends Component {
                         }}
                     >
                         <View style={styles.cameraContainer}>
-                            <TouchableOpacity style={styles.cameraButton}>
+                            <TouchableOpacity
+                                style={styles.cameraButton}
+                                onPress={() =>
+                                    this.setState({ beginRecording: false })
+                                }
+                            >
                                 <Ionicons
-                                    name="ios-photos"
+                                    name="md-close"
                                     style={styles.cameraIcon}
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.cameraButton}>
                                 <Ionicons
-                                    name="ios-photos"
-                                    style={styles.photosButton}
-                                />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.cameraButton}>
-                                <Ionicons
-                                    name="ios-photos"
+                                    name="ios-radio-button-off"
                                     style={styles.cameraIcon}
                                 />
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.cameraButton}>
+                            <TouchableOpacity
+                                style={styles.cameraButton}
+                                onPress={this.flipCamera}
+                            >
                                 <Ionicons
-                                    name="ios-photos"
+                                    name="ios-reverse-camera"
                                     style={styles.cameraIcon}
                                 />
                             </TouchableOpacity>
@@ -132,13 +142,16 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         margin: 30,
     },
+    // This needs to be fixed hardcoding bottom not a good way
+    // of creating dynamic elements
     cameraButton: {
         alignSelf: "flex-end",
         alignItems: "center",
         backgroundColor: "transparent",
+        bottom: -670,
     },
     cameraIcon: {
-        color: "#fff",
+        color: "white",
         fontSize: 40,
     },
 });
