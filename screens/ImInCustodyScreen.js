@@ -1,74 +1,95 @@
-import * as React from 'react';
-import { Alert, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React, {Component} from 'react';
+import {  StyleSheet, Text, View } from 'react-native';
+import { MapView } from 'expo';
+import * as Location from 'expo-location'
+import * as Permissions from 'expo-permissions'
+import Constants from 'expo-constants';
 
-const CurrentPosition = () => {
-    const [error, setError] = useState("");
-    const [position, setPosition] = useState({
-      latitude: 0,
-      longitude: 0
-    });
-}
-
-const getPosition = () => {
-    alert('Hello')
-    /* Geolocation.getCurrentPosition(
-      pos => {
-        setError("");
-        setPosition({
-          latitude: pos.coords.latitude,
-          longitude: pos.coords.longitude
-        });
-      },
-      e => setError(e.message)
-    ); */
-  };
-
-export default class ImInCustodyScreen extends React.Component{
+   
+  
+export default class ImInCustodyScreen extends Component{
     state = {
-        location: null
-    };
+        mapRegion: null,
+        hasLocationPermissions: false,
+        locationResult: null,
+        hour: new Date().getHours(),
+        minute: new Date().getMinutes(),
+        second: new Date().getSeconds()
+      };
 
-    render(){
-        return (
-            <View style={styles.container}>
-                <TouchableOpacity onPress={getPosition}>
-                    <Text style={styles.welcome}>Find My Coords?</Text>
-                    <Text>Location: {this.state.location}</Text>
-                </TouchableOpacity>
-            </View>
-        );
+    componentDidMount() {
+        this.getLocationAsync();
     }
     
-}
-
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-		justifyContent: 'center',
-	    alignItems: 'center',
-	    backgroundColor: '#F5FCFF',
-        paddingTop: 23
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10
-    },
-    input: {
-       margin: 15,
-       height: 40,
-       borderColor: '#7a42f4',
-       borderWidth: 1
-    },
-    submitButton: { 
-        backgroundColor: '#7a42f4',
-        padding: 10,
-        margin: 15,
-       height: 40,
-    },
-    submitButtonText:{
-       color: 'white'
+    handleMapRegionChange (mapRegion){
+        console.log(mapRegion);
+        this.setState({ mapRegion });
     }
-})
+    
+    async getLocationAsync (){
+        let { status } = await Permissions.askAsync(Permissions.LOCATION);
+        if (status !== 'granted') {
+            this.setState({
+            locationResult: 'Permission to access location was denied',
+        });
+        } else {
+            this.setState({ hasLocationPermissions: true });
+        }
+    
+        let location = await Location.getCurrentPositionAsync({});
+        this.setState({ locationResult: JSON.stringify(location) });
+       
+        // Center the map on the location we just fetched.
+        this.setState({mapRegion: { latitude: location.coords.latitude, longitude: location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }});
+    }
+
+
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <Text style={styles.paragraph}>
+                    Pan, zoom, and tap on the map!
+                </Text>
+            
+            {
+                this.state.locationResult === null ?
+                <Text>Finding your current location...</Text> :
+                this.state.hasLocationPermissions === false ?
+                    <Text>Location permissions are not granted.</Text> :
+                    this.state.mapRegion === null ?
+                <Text>Map region doesn't exist.</Text> :
+                <Text>
+                    Location: {this.state.locationResult} ~{"\n"}
+                    Time: {this.state.hour}:{this.state.minute}:{this.state.second}
+                </Text>
+                /*<MapView
+                    style={{ alignSelf: 'stretch', height: 400 }}
+                    region={this.state.mapRegion}
+                    onRegionChange={this.handleMapRegionChange}
+                />*/
+            }
+            
+                
+            </View>
+            
+        );
+      }
+    }
+    
+    const styles = StyleSheet.create({
+      container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#ecf0f1',
+        paddingTop: Constants.statusBarHeight,
+      },
+      paragraph: {
+        margin: 24,
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: '#34495e',
+      },
+    });
