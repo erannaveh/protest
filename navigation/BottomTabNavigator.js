@@ -22,7 +22,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={HomeScreen}
         options={{
           title: 'SafeGroups',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-people" />,
         }}
       />
       <BottomTab.Screen
@@ -38,7 +38,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={SafeArrestScreen}
         options={{
           title: 'SafeArrest',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-albums" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-hand" />,
         }}
       />
     </BottomTab.Navigator>

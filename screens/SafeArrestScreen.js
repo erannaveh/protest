@@ -10,19 +10,19 @@ export default class SafeArrestScreen extends Component {
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <OptionButton
-          icon="md-school"
+          icon="md-warning"
           label="I'm Next To Police"
           onPress={() => this.props.navigation.navigate('ImNextToPolice')}
         />
 
         <OptionButton
-          icon="md-compass"
+          icon="md-lock"
           label="I'm In Custody"
           onPress={() => this.props.navigation.navigate('ImInCustody')}
         />
 
         <OptionButton
-          icon="ios-chatboxes"
+          icon="md-school"
           label="Know Your Rights During Protests"
           onPress={() => WebBrowser.openBrowserAsync('https://www.aclu.org/know-your-rights/protesters-rights/')}
           isLastOption

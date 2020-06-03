@@ -23,26 +23,26 @@ export default class HomeScreen extends React.Component {
           </View>
           
           
-          <ScrollView style={styles2.container} contentContainerStyle={styles2.contentContainer}>
+          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
             <OptionButton
-                icon="md-compass"
+                icon="md-list"
                 label="My Groups"
                 onPress={() => this.props.navigation.navigate('MyGroups')}
             />
             <OptionButton
-              icon="md-school"
+              icon="md-create"
               label="Create A Group"
               onPress={() => this.props.navigation.navigate('CreateGroup')}
             />
 
             <OptionButton
-              icon="md-compass"
+              icon="md-add"
               label="Join A Group"
               onPress={() => this.props.navigation.navigate('JoinGroup')}
             />
 
             <OptionButton
-              icon="ios-chatboxes"
+              icon="md-school"
               label="Info On Safe Protesting"
               onPress={() => WebBrowser.openBrowserAsync('https://www.dsa-la.org/guidelines_for_safe_protesting_covid')}
               isLastOption
@@ -55,14 +55,6 @@ export default class HomeScreen extends React.Component {
             </TouchableOpacity>
           </View>
         </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/BottomTabNavigator.js</MonoText>
-          </View>
-        </View>
       </View>
     );
   }
@@ -123,7 +115,7 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fafafa',
   },
   developmentModeText: {
     marginBottom: 20,
@@ -133,7 +125,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   contentContainer: {
-    paddingTop: 30,
+    paddingTop: 15,
   },
   welcomeContainer: {
     alignItems: 'center',
@@ -206,16 +198,6 @@ const styles = StyleSheet.create({
   helpLinkText: {
     fontSize: 14,
     color: '#2e78b7',
-  },
-});
-
-const styles2 = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fafafa',
-  },
-  contentContainer: {
-    paddingTop: 15,
   },
   optionIconContainer: {
     marginRight: 12,
